@@ -11,10 +11,11 @@ pipeline {
     
     stage('Deploy to AWS') {
       environment {
-        AWS_ACCESS_KEY_ID = credentials('AKIAQPU2POXWVXCNRCGO')
-        AWS_SECRET_ACCESS_KEY = credentials('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')
+        AWS_ACCESS_KEY_ID = credentials('AKIAQPU2POXW5Q2ZIIGG')
+        AWS_SECRET_ACCESS_KEY = credentials('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')
         AWS_REGION = 'eu-north-1'
-        ECR_REPOSITORY = 'public.ecr.aws/l0f4u9w7/my_app'
+        ELASTIC_BEANSTALK_APPLICATION = 'my-app'
+        ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app-env'
       }
       steps {
         // Шаги для деплоя на AWS
@@ -22,13 +23,10 @@ pipeline {
           [$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']
         ]) {
           script {
-            // Шаги для сборки и загрузки Docker-образа
-            sh 'docker build -t my-app .'
-            sh 'docker tag my-app ${env.ECR_REPOSITORY}:latest'
-            sh 'docker push ${env.ECR_REPOSITORY}:latest'
-            
-            // Шаги для развертывания контейнера в AWS (например, на ECS, EKS или Elastic Beanstalk)
-            // Здесь можно использовать команды AWS CLI, Terraform или специфичные плагины Jenkins
+            // Шаги для создания новой версии приложения и обновления окружения в Elastic Beanstalk
+            sh 'zip -r my-app.zip *'
+            sh "aws elasticbeanstalk create-application-version --application-name ${ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER} --source-bundle S3Bucket=null,S3Key=my-app.zip"
+            sh "aws elasticbeanstalk update-environment --environment-name ${ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER}"
           }
         }
       }
