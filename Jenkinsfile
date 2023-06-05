@@ -14,7 +14,7 @@ pipeline {
         AWS_ACCESS_KEY_ID = credentials('AKIAQPU2POXWVXCNRCGO')
         AWS_SECRET_ACCESS_KEY = credentials('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')
         AWS_REGION = 'eu-north-1'
-        ECR_REPOSITORY = '033609971181.dkr.ecr.eu-north-1.amazonaws.com/my_tesr_app'
+        ECR_REPOSITORY = 'public.ecr.aws/l0f4u9w7/my_app'
       }
       steps {
         // Шаги для деплоя на AWS
