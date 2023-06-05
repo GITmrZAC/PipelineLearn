@@ -1,8 +1,12 @@
 pipeline {
   agent any
   environment {
-    AWS_ACCESS_KEY_ID = "${credentials('JenkinsBEN')['accessKeyId']}"
-    AWS_SECRET_ACCESS_KEY = "${credentials('JenkinsBEN')['secretKey']}"
+    AWS_ACCESS_KEY_ID = withCredentials([string(credentialsId: 'JenkinsBEN', variable: 'AWS_ACCESS_KEY_ID')]) {
+      return "${AWS_ACCESS_KEY_ID}"
+    }
+    AWS_SECRET_ACCESS_KEY = withCredentials([string(credentialsId: 'JenkinsBEN', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+      return "${AWS_SECRET_ACCESS_KEY}"
+    }
     ELASTIC_BEANSTALK_APPLICATION = 'my-app'
     ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app-env'
   }
@@ -30,4 +34,3 @@ pipeline {
     }
   }
 }
-
