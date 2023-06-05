@@ -11,10 +11,10 @@ pipeline {
     
     stage('Deploy to AWS') {
       environment {
-        AWS_ACCESS_KEY_ID = credentials('your-aws-access-key-id')
-        AWS_SECRET_ACCESS_KEY = credentials('your-aws-secret-access-key')
-        AWS_REGION = 'your-aws-region'
-        ECR_REPOSITORY = 'your-ecr-repository-url'
+        AWS_ACCESS_KEY_ID = credentials('AKIAQPU2POXW5Q2ZIIGG')
+        AWS_SECRET_ACCESS_KEY = credentials('6gOfpCKly8gothdGZyYD1JT205hoMqbX1JYZl4g2')
+        AWS_REGION = 'eu-north-1'
+        ECR_REPOSITORY = '033609971181.dkr.ecr.eu-north-1.amazonaws.com/my_tesr_app'
       }
       steps {
         // Шаги для деплоя на AWS
