@@ -1,5 +1,9 @@
 pipeline {
   agent any
+  environment {
+    ELASTIC_BEANSTALK_APPLICATION = 'my-app'
+    ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app-env'
+  }
   stages {
     stage('Build') {
       steps {
@@ -10,12 +14,6 @@ pipeline {
     }
     
     stage('Deploy to AWS') {
-      environment {
-        AWS_ACCESS_KEY_ID = credentials('JenkinsBEN')['accessKeyId'].toString()
-        AWS_SECRET_ACCESS_KEY = credentials('JenkinsBEN')['secretKey'].toString()
-        ELASTIC_BEANSTALK_APPLICATION = 'my-app'
-        ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app-env'
-      }
       steps {
         // Шаги для деплоя на AWS
         withAWS(credentials: [
