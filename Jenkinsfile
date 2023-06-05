@@ -1,9 +1,13 @@
 pipeline {
   agent any
+  
   environment {
+    AWS_ACCESS_KEY_ID = credentials('JenkinsBEN')['accessKeyId']
+    AWS_SECRET_ACCESS_KEY = credentials('JenkinsBEN')['secretKey']
     ELASTIC_BEANSTALK_APPLICATION = 'my-app'
     ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app-env'
   }
+  
   stages {
     stage('Build') {
       steps {
@@ -16,8 +20,12 @@ pipeline {
     stage('Deploy to AWS') {
       steps {
         // Шаги для деплоя на AWS
-        withAWS(credentials: [
-          [$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']
+        withCredentials([
+          [
+            $class: 'AmazonWebServicesCredentialsBinding',
+            accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+            secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+          ]
         ]) {
           script {
             // Шаги для создания новой версии приложения и обновления окружения в Elastic Beanstalk

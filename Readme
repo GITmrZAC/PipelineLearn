@@ -1,0 +1,3 @@
+    В блоке environment, удалены вызовы .toString() при определении переменных AWS_ACCESS_KEY_ID и AWS_SECRET_ACCESS_KEY.
+    Блок withAWS заменен на withCredentials, чтобы правильно использовать учетные данные AWS.
+    Обновлены параметры вызова aws elasticbeanstalk create-application-version, чтобы указать, что S3Bucket равно null, а S3Key равно my-app.zip.
