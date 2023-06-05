@@ -1,23 +1,13 @@
 {
   "name": "pipelinelearn",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Your project description",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "build": "echo 'Build your project here'"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GITmrZAC/PipelineLearn.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/GITmrZAC/PipelineLearn/issues"
-  },
-  "homepage": "https://github.com/GITmrZAC/PipelineLearn#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.17.1"
   }
 }
+
