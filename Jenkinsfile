@@ -11,9 +11,8 @@ pipeline {
     
     stage('Deploy to AWS') {
       environment {
-        AWS_ACCESS_KEY_ID = "${credentials('JenkinsBEN').accessKeyId}"
-        AWS_SECRET_ACCESS_KEY = "${credentials('JenkinsBEN').secretKey}"
-        AWS_REGION = 'eu-north-1'
+        AWS_ACCESS_KEY_ID = credentials('JenkinsBEN')['accessKeyId']
+        AWS_SECRET_ACCESS_KEY = credentials('JenkinsBEN')['secretKey']
         ELASTIC_BEANSTALK_APPLICATION = 'my-app'
         ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app-env'
       }
