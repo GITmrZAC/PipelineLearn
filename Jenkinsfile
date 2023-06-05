@@ -11,8 +11,8 @@ pipeline {
     
     stage('Deploy to AWS') {
       environment {
-        AWS_ACCESS_KEY_ID = credentials('AKIAQPU2POXW5Q2ZIIGG')
-        AWS_SECRET_ACCESS_KEY = credentials('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')
+        AWS_ACCESS_KEY_ID = credentials('AKIAQPU2POXWVXCNRCGO')
+        AWS_SECRET_ACCESS_KEY = credentials('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')
         AWS_REGION = 'eu-north-1'
         ECR_REPOSITORY = '033609971181.dkr.ecr.eu-north-1.amazonaws.com/my_tesr_app'
       }
