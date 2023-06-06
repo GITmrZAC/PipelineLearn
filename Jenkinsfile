@@ -25,7 +25,7 @@ pipeline {
           script {
             // Шаги для создания новой версии приложения и обновления окружения в Elastic Beanstalk
             sh 'zip -r my-app.zip *'
-            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER} --source-bundle S3Bucket=null,S3Key=my-app.zip"
+            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER} --source-bundle S3Key=my-app.zip"
             sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER}"
           }
         }
