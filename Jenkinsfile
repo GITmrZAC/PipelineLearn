@@ -18,6 +18,11 @@ pipeline {
         sh 'npm install'
         sh 'npm run build'
         sh 'zip -r $APP_FILE_PATH *'
+        
+        // Временные шаги для проверки сборки
+        sh 'ls -l' // Вывод списка файлов и папок в текущей директории
+        sh 'echo "App zip file:"'
+        sh 'ls -l $APP_FILE_PATH' // Вывод информации о файле app.zip
       }
     }
     
@@ -35,4 +40,5 @@ pipeline {
     }
   }
 }
+
 
