@@ -8,6 +8,7 @@ pipeline {
     ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app1-env'
     AWS_REGION = 'eu-north-1'
     APP_FILE_PATH = 'app.zip'
+    AWS_ACCOUNT_ID = '033609971181'
   }
   
   stages {
