@@ -4,10 +4,9 @@ pipeline {
   environment {
     AWS_ACCESS_KEY_ID = credentials('JenkinsBEN')
     AWS_SECRET_ACCESS_KEY = credentials('JenkinsBEN')
-    ELASTIC_BEANSTALK_APPLICATION = 'my'
-    ELASTIC_BEANSTALK_ENVIRONMENT = 'app-env'
+    ELASTIC_BEANSTALK_APPLICATION = 'my-app1'
+    ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app1-env'
     AWS_REGION = 'eu-north-1'
-    S3_BUCKET = 'my-bucket-app-aws' 
   }
   
   stages {
@@ -25,7 +24,8 @@ pipeline {
         withAWS(credentials: 'JenkinsBEN', region: AWS_REGION) {
           script {
             // Шаги для создания новой версии приложения и обновления окружения в Elastic Beanstalk
-            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER} --source-bundle S3Bucket=${env.S3_BUCKET},S3Key=app.zip"
+            sh 'zip -r app.zip *'
+            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER} --source-bundle S3Bucket=null,S3Key=app.zip"
             sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER}"
           }
         }
