@@ -32,13 +32,14 @@ pipeline {
         withAWS(credentials: 'JenkinsBEN', region: AWS_REGION) {
           script {
             // Шаги для создания новой версии приложения
-            //sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER} --source-bundle S3Bucket=elasticbeanstalk-eu-north-1,S3Key=${env.APP_FILE_PATH}"
             sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER}"
-            // Добавленный шаг для указания команды npm start
-            sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER} --option-settings Namespace=aws:elasticbeanstalk:container:nodejs,OptionName=NodeCommand,Value=\"npm start\""
+            
+            // Добавленный шаг для обновления окружения и указания команды npm start
+            sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER} --option-settings OptionName=NODE_ENV,Value=production OptionName=NODE_COMMAND,Value=npm\\\\\\\\\\\\\\\\ start"
           }
         }
       }
     }
   }
 }
+
