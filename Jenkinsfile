@@ -35,7 +35,7 @@ pipeline {
             sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER}"
             
             // Добавленный шаг для обновления окружения и указания команды npm start
-            sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER} --option-settings Namespace=aws:elasticbeanstalk:environment,OptionName=PROC,Value='npm start'"
+            sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER} --option-settings Namespace=aws:elasticbeanstalk:container:nodejs,OptionName=PROC,Value='npm start'"
           }
         }
       }
