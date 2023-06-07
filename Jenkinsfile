@@ -7,6 +7,7 @@ pipeline {
     ELASTIC_BEANSTALK_APPLICATION = 'my-app1'
     ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app1-env'
     AWS_REGION = 'eu-north-1'
+    APP_FILE_PATH = 'app.zip'
   }
   
   stages {
@@ -15,7 +16,7 @@ pipeline {
         // Шаги сборки вашего приложения
         sh 'npm install'
         sh 'npm run build'
-        sh 'zip -r app.zip *'
+        sh 'zip -r $APP_FILE_PATH *'
       }
     }
     
@@ -25,12 +26,8 @@ pipeline {
         withAWS(credentials: 'JenkinsBEN', region: AWS_REGION) {
           script {
             // Шаги для создания новой версии приложения и обновления окружения в Elastic Beanstalk
-            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER}"
+            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER} --source-bundle S3Bucket=elasticbeanstalk-${AWS_REGION}-${AWS_ACCOUNT_ID},S3Key=${env.APP_FILE_PATH}"
             sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER}"
-            sh "aws elasticbeanstalk create-storage-location"
-            sh "aws elasticbeanstalk create-environment"
-            sh "aws elasticbeanstalk wait environment-ready"
-            sh "aws elasticbeanstalk restart-app-server"
           }
         }
       }
