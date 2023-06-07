@@ -31,14 +31,14 @@ pipeline {
         // Шаги для деплоя на AWS
         withAWS(credentials: 'JenkinsBEN', region: AWS_REGION) {
           script {
-            // Шаги для создания новой версии приложения и обновления окружения в Elastic Beanstalk
-            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER}"
-            sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER}"
+            // Шаги для создания новой версии приложения
+            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER} --source-bundle S3Bucket=elasticbeanstalk-eu-north-1,S3Key=${env.APP_FILE_PATH}"
+            
+            // Добавленный шаг для указания команды npm start
+            sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER} --option-settings Namespace=aws:elasticbeanstalk:container:nodejs,OptionName=NodeCommand,Value=\"npm start\""
           }
         }
       }
     }
   }
 }
-
-
