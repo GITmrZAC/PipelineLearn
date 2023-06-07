@@ -26,11 +26,8 @@ pipeline {
         // Шаги для деплоя на AWS
         withAWS(credentials: 'JenkinsBEN', region: AWS_REGION) {
           script {
-            // Загрузка файла приложения в S3 (нет необходимости, если файл уже локально)
-            // sh "aws s3 cp ${env.APP_FILE_PATH} s3://elasticbeanstalk-${AWS_REGION}-${AWS_ACCOUNT_ID}/${env.APP_FILE_PATH}"
-            
             // Шаги для создания новой версии приложения и обновления окружения в Elastic Beanstalk
-            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER} --source-bundle S3Bucket=elasticbeanstalk-${AWS_REGION}-${AWS_ACCOUNT_ID},S3Key=${env.APP_FILE_PATH}"
+            sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER}"
             sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER}"
           }
         }
