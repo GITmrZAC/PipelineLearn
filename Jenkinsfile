@@ -4,8 +4,8 @@ pipeline {
   environment {
     AWS_ACCESS_KEY_ID = credentials('JenkinsBEN')
     AWS_SECRET_ACCESS_KEY = credentials('JenkinsBEN')
-    ELASTIC_BEANSTALK_APPLICATION = 'my-app'
-    ELASTIC_BEANSTALK_ENVIRONMENT = 'my-app-env'
+    ELASTIC_BEANSTALK_APPLICATION = 'my'
+    ELASTIC_BEANSTALK_ENVIRONMENT = 'app-env'
     AWS_REGION = 'eu-north-1'
     S3_BUCKET = 'my-bucket-app-aws' 
   }
