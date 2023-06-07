@@ -35,11 +35,10 @@ pipeline {
             sh "aws elasticbeanstalk create-application-version --application-name ${env.ELASTIC_BEANSTALK_APPLICATION} --version-label ${env.BUILD_NUMBER}"
             
             // Добавленный шаг для обновления окружения и указания команды npm start
-            sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER} --option-settings OptionName=NODE_ENV,Value=production OptionName=NODE_COMMAND,Value=npm\\\\\\\\\\\\\\\\ start"
+            sh "aws elasticbeanstalk update-environment --environment-name ${env.ELASTIC_BEANSTALK_ENVIRONMENT} --version-label ${env.BUILD_NUMBER} --option-settings OptionName=NODE_ENV,Value=production OptionName=NODE_COMMAND,Value=npm\\\\\\\\ start"
           }
         }
       }
     }
   }
 }
-
